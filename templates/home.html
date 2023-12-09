@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Musician Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Album Rating</th>
+        <th scope="col">Instrument Type</th>
+        <th scope="col">Album Name</th>
+        <th scope="col">Release Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for album in albums %}
+      <tr>
+        <th scope="row">{{album.id}}</th>
+        <td><a href="{% url 'edit_musician' album.musician.id%}">{{album.musician.firstName}}
+            {{album.musician.lastName}}</a>
+        </td>
+        <td>{{album.musician.email}}</td>
+        <td>{{album.rating}}</td>
+        <td>{{album.musician.instrumentType}}</td>
+        <td>{{album.albumName}}</td>
+        <td>{{album.albumReleaseDate}}</td>
+        <td>
+          <a href="{% url 'edit_album' album.id%}" class="btn btn-warning">Edit</a>
+          <a href="{% url 'delete_album' album.id%}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
+<div class="row">
+  {% for album in albums %}
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{album.albumName}}</h5>
+        <p class="card-text">{{post.content}}</p>
+        <p>Author: {{post.author.name}}</p>
+        <p>
+          Categories : {% for i in post.category.all %}
+          <button class="btn btn-primary btn-sm m-2" disabled>
+            {{i.name}}
+          </button>
+          {% endfor %}
+        </p>
+        Edit {% comment %}
+        <a href="{% url 'edit_post' post.id%}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'delete_post' post.id%}" class="btn btn-danger">Delete</a>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
