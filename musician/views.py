@@ -4,6 +4,7 @@ from . import models
 
 # Create your views here.
 def add_musician(request):
+    title = 'Add Musician'
     if request.method == 'POST':
         musician_form = forms.MusicianForm(request.POST)
         if musician_form.is_valid():
@@ -11,7 +12,7 @@ def add_musician(request):
             return redirect('homepage')
     else:
         musician_form = forms.MusicianForm()
-    return render(request, 'add_musician.html', {'form': musician_form})
+    return render(request, 'add_musician.html', {'form': musician_form, 'title': title})
 
 def delete_album(request, id):
     print(id)
@@ -19,6 +20,7 @@ def delete_album(request, id):
     return redirect('homepage')
 
 def edit_musician(request, id):
+    title = 'Edit Musician'
     print(id)
     musician = models.Musician.objects.get(pk=id)
     musician_form = forms.MusicianForm(instance=musician)
@@ -27,4 +29,4 @@ def edit_musician(request, id):
         if musician_form.is_valid():
             musician_form.save()
             return redirect('homepage')
-    return render(request, 'add_musician.html', {'form': musician_form})
+    return render(request, 'add_musician.html', {'form': musician_form, 'title': title})
